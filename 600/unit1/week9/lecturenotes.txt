@@ -1,0 +1,140 @@
+32 or 64 bit Int Support
+Int 4 units of memory: {
+	Location in memoy L{i}? L is the stat of the list
+	L*4*i 
+	Each element has to be the same sized
+}
+List have different sizes in Python
+Linked List 1960s(used by Lisp) Every elememt of the list is a pointer to the next element. O(i) (not good with binary search)
+Indirection - each object is a pointer to some place in memory (Most Powerful)
+
+Binary search only works when it is sorted. (not sorted O(L))
+1. Seach L
+2. Use binay search - O(log(len(L)))
+
+Amortized Complexity
+If we plan on pefoming K searches is O(sort(L))+K*log(len(L)) < K*len(L)
+O(sort(L))+K*log(len(L)) - Sorted (It pays off)
+K*len(L) - not soted
+K is usually BIG
+
+Sorting:
+1. Bubble sort(Bad Almost always the wrong answer)
+
+2. Selection sort - (not vey good but useful) Depends upon establishing abnd maintaining an invariant(research) divids the list into a prefix and a suffix
+Invariant = prefix is always sorted
+example1: find the smallest element in the list (suffix) and add it to the pefix. Find the second smallest element in the list (suffix) and add it to the pefix
+example2: {
+	def selSort(L):
+		***Assumes that L is a list of elements that can be compared using >. Sorts L in ascending order***
+		for i in range(len(L) - 1):
+		#Invaiant: the list L(:i) is sorted
+		minIndx = i
+		minVal = L[i]
+		j = i + 1
+		while j < len(L):
+			if minVal > L[j]:
+				minIndx = j
+				minVal = L[j]
+			j += 1
+		temp = L[i]
+		L[i] = L[minIndx]
+		L[minIndx] = temp
+		print('Partially sorted list = ', L)
+
+	L = [35, 4, 5, 29, 17, 58, 0]
+	selSort(L)
+	print('Sorted List = ', L)
+}
+n = len(c)
+fist I will look at n, Then n-1, then n-2 (n+n-1+n-2) = O(n**2)
+SELECTION SORT IS O(n**2)
+
+3. (We can do better) Divide and Conquer
+	A) Choose a threshold input size (n0), This is the smallest problem and keep dividing it until you can conque it
+	B) How many instances at each division
+	C) We need an algoith to combine the sub-solutions
+Example:{
+	# Merge Sort
+	[1, 5, 12, 18, 19, 20]
+	[2, 3, 4, 17]
+	1) Compare the first element of the fist list with the fist element of the second list and detemine whats smaller
+	2) Then compae 5 and two and detemine whats smaller and so on
+	answer: [1,2,3,4,5,12, etc..]
+	* 12 copies to the new list
+	* copies O(len(c))
+	* How many compaisons were there? The length of the longer list O(len(L))
+	That Takes care of Step C in Divide and Conquer
+	Then merge
+	But how many times do we call mege? n(log(n))
+}
+lambda Using fucntions as arguments in other functions
+
+def merge(left, right, lt):
+    """Assumes left and right are sorted lists.
+     lt defines an ordering on the elements of the lists.
+     Returns a new sorted(by lt) list containing the same elements
+     as (left + right) would contain."""
+    result = []
+    i,j = 0, 0
+    while i < len(left) and j < len(right):
+        if lt(left[i], right[j]):
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    while (i < len(left)):
+        result.append(left[i])
+        i += 1
+    while (j < len(right)):
+        result.append(right[j])
+        j += 1
+    return result
+            
+def sort(L, lt = lambda x,y: x < y):
+    """Returns a new sorted list containing the same elements as L"""
+    if len(L) < 2:
+        return L[:]
+    else:
+        middle = int(len(L)/2)
+        left = sort(L[:middle], lt)
+        right = sort(L[middle:], lt)
+        print 'About to merge', left, 'and', right
+        return merge(left, right, lt)
+
+##L = [35, 4, 5, 29, 17, 58, 0]
+##newL = sort(L)
+##print 'Sorted list =', newL
+##L = [1.0, 2.25, 24.5, 12.0, 2.0, 23.0, 19.125, 1.0]
+##newL = sort(L, float.__lt__)
+##print 'Sorted list =', newL
+
+
+Example2: {
+	def lastNameFirstName(name1, name2):
+	    import string
+	    name1 = string.split(name1, ' ')
+	    name2 = string.split(name2, ' ')
+	    if name1[1] != name2[1]:
+	        return name1[1] < name2[1]
+	    else:
+	        return name1[0] < name2[0]
+
+	def firstNameLastName(name1, name2):
+	    import string
+	    name1 = string.split(name1, ' ')
+	    name2 = string.split(name2, ' ')
+	    if name1[0] != name2[0]:
+	        return name1[0] < name2[0]
+	    else:
+	        return name1[1] < name2[1]
+
+	##L = ['John Guttag', 'Tom Brady', 'Chancellor Grimson', 'Gisele Brady',
+	##     'Big Julie']
+	##newL = sort(L, lastNameFirstName)
+	##print 'Sorted list =', newL
+	##newL = sort(L, firstNameLastName)
+	##print 'Sorted list =', newL
+}
+The built in sort has flexibilty. Use functions as arguments to write faster code

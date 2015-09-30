@@ -1,0 +1,127 @@
+# Efficiency and Order of Growth
+
+* Efficiency is Rarely about coding details, Its about choosing the right algorithm
+
+Important algorithms are hard so we focus on problem reducing
+We reduce it to a previously solved problem(THIS IS KEY)(this looks a little bit like this problem, how can i make it solve my problem?)
+Space and time - We can trade off
+We will focus on Time
+Computational Complexity - how long a program runs on a computer(Impossible to tell (Speed of machine, cleverness of the Pythonimplementation, Depends oupon the input) count the number of Basic steps)
+steps - operations in constant time (steps take constant time)
+
+RAM - random access machine 
+	  (sequential)
+	  (memory access constant time)
+
+How long a program takes to run - Best Case, worst case, expected (We dont focus on the best case nor the worst case) Using worst case there are no suprises (the worst case happens often)
+example: {
+	/* factorial 2+3*n+1 */
+	def f(n):
+		assert(n >= 0)
+		answer = 1
+		while n > 1:
+			answer *= n
+        	n -= 1
+    	return answer
+}
+Ignore additive constants WE care about GROWTH with the respect to size of input
+Asymptotic growth 
+Big Oh notation - O(n) it grows no faster than
+gives us an upperbound for the Asymptotic growth of the function (f(x)EO(x**2))
+function f grows no faster than the quadratic polynomial x**2
+Example: {
+	O(1) - Constant (independent of the input)
+	O(logn)
+	O(n)
+	O(nlogn) - Log Linear
+	O(n**c) - Polynomial
+	O(c**n) - Exponential
+}
+SEE showGrowth.py
+Try not to use log linear
+We want a typebound - no faster than but not slower than
+f(x) is O(x**2) worst case is O(x**2)
+example: {
+	# recursive
+	# We care about the number of times factorial is called
+	def fact(n):
+	    assert n >= 0
+	    if n <= 1:
+	        return n
+	    else:
+	        return n*fact(n - 1)
+}
+example2: {
+	def g(n):
+	    x = 0
+	    for i in range(n):
+	        for j in range(n):
+	            x += 1
+	    return x
+# Start at the inside and work your way out
+# O(n**2)
+}
+example3: {
+	def h(x):
+	    assert type(x) == int and x >= 0
+	    answer = 0
+	    s = str(x)
+	    for c in s:
+	        answer += int(c)
+	    return answer
+}
+Your not done until you tell what n means
+example4: {
+/* Linear Search
+	def search(L, e):
+	    for elem in L:
+	        if elem == e:
+	            return True
+	        if elem > e:
+	            return False
+	    return False
+}
+example5: {
+/* Binary Search (recursive)
+	def bSearch(L, e, low, high):
+	    global numCalls
+	    numCalls += 1
+	    if high - low < 2:
+	        return L[low] == e or L[high] == e
+	    mid = low + int((high - low)/2)
+	    if L[mid] == e:
+	        return True
+	    if L[mid] > e:
+	        return bSearch(L, e, low, mid - 1)
+	    else:
+	        return bSearch(L, e, mid + 1, high)
+}
+def search(L, e):
+    return bSearch(L, e, 0, len(L) - 1)
+
+##L = range(100)
+##numCalls = 0
+##search(L, 100)
+##msg = 'Number of calls when length = '
+##print msg + str(len(L)) + ' is', numCalls
+##L = range(200)
+##numCalls = 0
+##search(L, 200)
+##print msg + str(len(L)) + ' is', numCalls
+##L = range(400)
+##numCalls = 0
+##search(L, 400)
+##print msg + str(len(L)) + ' is', numCalls
+##L = range(800)
+##numCalls = 0
+##search(L, 800)
+##print msg + str(len(L)) + ' is', numCalls
+##L = range(1600)
+##numCalls = 0
+##search(L, 1600)
+##print  msg + str(len(L)) + ' is', numCalls
+##L = range(10000000) #ten million
+##numCalls = 0
+##search(L, 10000000)
+##print msg + str(len(L)) + ' is', numCalls
+##

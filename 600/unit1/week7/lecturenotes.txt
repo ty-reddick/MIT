@@ -1,0 +1,124 @@
+* Floating point numbers
+* Debugging
+
+Binary Numbers - 2 digit (0 and 1)
+101 = 1*4+0*2+1*1=5
+n digits 2**n
+floating point numbers causes problems for people
+computers do everything in base 2 - Its easy to build switches on an electical device (on or off (0 or 1))
+people think in base 10
+It causes problems with fractional numbers
+0.125 = 1/8 fraction = 1*10**-1 + 2*10**-2 + 5**-3
+lets see in binary
+0.001 = 1*10**-3
+decimal: 0.1 = 1*10**-1
+lets see in binary:
+Way too long
+example of how you can get caught up:
+x = 0.0
+numIters = 100000
+for i in range(numIters):
+	x += 0.1
+print(x) # prints 10000.0 because print automatically rounds
+print(repr(x))
+print(10.0*x == numIters)
+Dont ever test if two floating point numbers are equal to each other
+instead:
+def close(x, y, epsilon = 0.00001):
+	return abs(x - y) < epsilon
+
+if close(10*x, numIters):
+	print('Good enough')
+
+Debugging
+A Bug: Aiken Relay Computer 09/09/1947
+Grace Murray Hopper
+Myths {
+	1. We write perfect programs and bugs just pop up (NO, you messed up)
+}
+Debuuging Goals - Not to eliminate one bug quickly. It is to move towards a bug free program. (Leaned Skill)
+Thinking Systematically and efficiently (Its a universal skill)
+(Theres a debuggers tool in the shell but the tool is not important)
+use print() statements to debug code
+/* Be sytematic in your search. Use  print() statements leisurely to determine where you went wrong*/
+*Seach for bugs using binary search
+Steps: {
+	1. What are we searching for when debugging? (How could it produce the result it did?)
+	2. Study available data (The program text, the test results)
+	3. Form an hypothesis (That you think is consistent with the data)
+	4. Design and run a REPEATABLE experiment (must have the potential to refute the hypothesis) (It has to be repeatable because alot of programs contain randomness)
+}
+
+Testing - find smaller input on which program fails
+
+Example: {
+	def isPal(x):
+	    """requires x to be a list
+	       returns True if the list is a palindrome; False otherwise"""
+	    assert type(x) == list
+	    temp = x[:] # clone it
+	    print('x = ', x)
+	    temp.reverse()
+	    print('x = ', x)
+	    if temp == x:
+	        return True
+	    else:
+	        return False
+
+	def silly(n):
+	    """requires: n is an int > 0
+	    Gets n inputs from user
+	    Prints 'Yes' if the inputs are a palindrome; 'No' otherwise"""
+	    assert type(n) == int and n > 0
+	    for i in range(n):
+	        result= []
+	        elem = raw_input('Enter something)
+	        result.append(elem)
+	        print(result) #debugging
+	    if isPal(result):
+	        print 'Is a palindrome'
+	    else:
+	        print 'Is not a palindrome'
+
+	# A test code or driver or harness (it has nothing to do with the program, only used to test)
+	def isPalTest():
+	    L = [1, 2]
+	    result = isPal(L)
+	    print 'Should print False:', result
+	    L = [1, 2, 1]
+	    result = isPal(L)
+	    print 'Should print True:', result
+
+	isPalTest()
+
+
+	##def silly(n):
+	##    """requires: n is an int > 0
+	##    Gets n inputs from user
+	##    Prints 'Yes' if the inputs are a palindrome; 'No' otherwise"""
+	##    assert type(n) == int and n > 0
+	##    result = []
+	##    for i in range(n):
+	##        elem = raw_input('Enter something: ')
+	##        result.append(elem)
+	##    print 'Entered:', result
+	##    if isPal(result):
+	##        print 'Is a palindrome'
+	##    else:
+	##        print 'Is not a palindrome'
+	##
+	##def isPal(x):
+	##    """requires x to be a list
+	##       returns True if the list is a palindrome; False otherwise"""
+	##    assert type(x) == list
+	##    print 'x =', x
+	##    temp = x
+	##    temp.reverse
+	##    print 'temp =', temp
+	##    if temp == x:
+	##        return True
+	##    else:
+	##        return False
+}
+
+There is no such thing as THE bug (Theres a bug)
