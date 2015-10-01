@@ -1,3 +1,3 @@
-Lessons from MIT Python 600 Course
+Lessons from MIT Computer Science 600 Courses
 
 www.Reddicktech.com
