@@ -1,0 +1,16 @@
+Class & Methods Simulations
+Person -> MITPerson(We created an id number) -> Undegad or Grad -> Couse list(a list of students in class)
+
+Yield is a generator(a lil like return but a geneator is a function that emembers the point in the function body where it last returned plus all of the local variables)
+
+How do we build computational models to solve problems
+Analytic Models - lets you pedict behaviour given some initioal coonditions and some parameters (Mathematics function)
+
+Similation methods - Sometimes we have systems that are not mathematical tractable(Weather forecasting)
+				   - Successivlly refining series of similations
+				   - Useful to abstact intemediate esults
+				   - Computes
+
+Simulation - Build a model that 1) Gives useful info about behavior of 									   a system
+								2) Gives me an Approximation to reality
+								3) simulation models ae descriptive not	   prescriptive
